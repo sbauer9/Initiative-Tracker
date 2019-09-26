@@ -23,4 +23,16 @@ public class Loader {
 		List<CharacterInitiative> players = csvToBean.parse();
 		return players;
 	}
+	
+	public List<CharacterInitiative> loadMonster() throws IOException {
+		Reader reader = Files.newBufferedReader(Paths.get("./monsters.csv"));
+		
+		CsvToBean<CharacterInitiative> csvToBean = new CsvToBeanBuilder(reader)
+                  .withType(CharacterInitiative.class)
+                  .withIgnoreLeadingWhiteSpace(true)
+                  .build();
+		
+		List<CharacterInitiative> monsters = csvToBean.parse();
+		return monsters;
+	}
 }

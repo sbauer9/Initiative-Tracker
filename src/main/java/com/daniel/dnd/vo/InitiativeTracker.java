@@ -17,6 +17,7 @@ public class InitiativeTracker {
 		try {
 			loader = new Loader();
 			orderList = loader.loadPlayers();
+			orderList.addAll(loader.loadMonster());
 			
 			System.out.println("Loading:");
 			printOrder();
@@ -42,7 +43,9 @@ public class InitiativeTracker {
 	public void rollInitiative() {
 		currentPosition = 0;
 		for(CharacterInitiative character : orderList) {
-			int initiative = rollDice(20, character.isHasAdvantage(), character.isHasDisadvantage())+character.getPermanentModifier()+character.getSize()+
+			int roll = rollDice(20, character.isHasAdvantage(), character.isHasDisadvantage());
+			character.setRoll(roll);
+			int initiative = roll+character.getPermanentModifier()+character.getSize()+
 					character.getTemporaryModifier();
 			character.setCurrentInitiative(initiative);
 		}

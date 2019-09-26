@@ -10,6 +10,7 @@ public class CharacterInitiative implements Comparable<CharacterInitiative>{
 	private int size;
 	private boolean hasAdvantage;
 	private boolean hasDisadvantage;
+	private int roll;
 	
 	public String getName() {
 		return name;
@@ -53,10 +54,18 @@ public class CharacterInitiative implements Comparable<CharacterInitiative>{
 	public void setHasDisadvantage(boolean hasDisadvantage) {
 		this.hasDisadvantage = hasDisadvantage;
 	}
+	
+	
 
+	public int getRoll() {
+		return roll;
+	}
+	public void setRoll(int roll) {
+		this.roll = roll;
+	}
 	@Override
 	public String toString() {
-		return "CharacterInitiative [name=" + name + ", currentInitiative=" + currentInitiative + ", tieBreaker="
+		return "CharacterInitiative [name=" + name + ", currentInitiative=" + currentInitiative + ", roll="+roll+", tieBreaker="
 				+ tieBreaker + ", permanentModifier=" + permanentModifier + ", temporaryModifier=" + temporaryModifier
 				+ ", size=" + size + ", hasAdvantage=" + hasAdvantage + ", hasDisadvantage=" + hasDisadvantage + "]";
 	}

@@ -1,0 +1,4 @@
+name,permanentModifier,Size,hasAdvantage,hasDisadvantage
+Goblin,2,2,FALSE,FALSE
+Blurgina,4,2,TRUE,FALSE
+Ancient White Dragon,5,-4,FALSE,FALSE
