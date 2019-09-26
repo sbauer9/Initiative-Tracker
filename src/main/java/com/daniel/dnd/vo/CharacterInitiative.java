@@ -7,7 +7,9 @@ public class CharacterInitiative implements Comparable<CharacterInitiative>{
 	private int tieBreaker;
 	private int permanentModifier;
 	private int temporaryModifier;
-	boolean hasAdvantage;
+	private int size;
+	private boolean hasAdvantage;
+	private boolean hasDisadvantage;
 	
 	public String getName() {
 		return name;
@@ -39,11 +41,24 @@ public class CharacterInitiative implements Comparable<CharacterInitiative>{
 	public void setHasAdvantage(boolean hasAdvantage) {
 		this.hasAdvantage = hasAdvantage;
 	}
+	public int getSize() {
+		return size;
+	}
+	public void setSize(int size) {
+		this.size = size;
+	}
+	public boolean isHasDisadvantage() {
+		return hasDisadvantage;
+	}
+	public void setHasDisadvantage(boolean hasDisadvantage) {
+		this.hasDisadvantage = hasDisadvantage;
+	}
+
 	@Override
 	public String toString() {
 		return "CharacterInitiative [name=" + name + ", currentInitiative=" + currentInitiative + ", tieBreaker="
 				+ tieBreaker + ", permanentModifier=" + permanentModifier + ", temporaryModifier=" + temporaryModifier
-				+ ", hasAdvantage=" + hasAdvantage + "]";
+				+ ", size=" + size + ", hasAdvantage=" + hasAdvantage + ", hasDisadvantage=" + hasDisadvantage + "]";
 	}
 	public int compareTo(CharacterInitiative arg0) {
 		if(currentInitiative == arg0.getCurrentInitiative()) return 0;

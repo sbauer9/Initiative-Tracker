@@ -42,7 +42,8 @@ public class InitiativeTracker {
 	public void rollInitiative() {
 		currentPosition = 0;
 		for(CharacterInitiative character : orderList) {
-			int initiative = rollDice(20, character.isHasAdvantage(), false)+character.getPermanentModifier()+character.getTemporaryModifier();
+			int initiative = rollDice(20, character.isHasAdvantage(), character.isHasDisadvantage())+character.getPermanentModifier()+character.getSize()+
+					character.getTemporaryModifier();
 			character.setCurrentInitiative(initiative);
 		}
 		

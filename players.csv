@@ -1,4 +1,4 @@
-name,permanentModifier,hasAdvantage
-Chad Pablo,5,FALSE
-Blurg,2,TRUE
-Kaler,3,FALSE
+name,permanentModifier,Size,hasAdvantage,hasDisadvantage
+Chad Pablo,5,0,TRUE,FALSE
+Blurg,2,2,TRUE,FALSE
+Kaler,3,0,FALSE,FALSE
