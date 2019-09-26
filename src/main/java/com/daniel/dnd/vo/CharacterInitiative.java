@@ -70,7 +70,18 @@ public class CharacterInitiative implements Comparable<CharacterInitiative>{
 				+ ", size=" + size + ", hasAdvantage=" + hasAdvantage + ", hasDisadvantage=" + hasDisadvantage + "]";
 	}
 	public int compareTo(CharacterInitiative arg0) {
-		if(currentInitiative == arg0.getCurrentInitiative()) return 0;
+		System.out.println("compare "+name+" to "+arg0.getName());
+		if(currentInitiative == arg0.getCurrentInitiative()) {
+			if(permanentModifier == arg0.getPermanentModifier()) {
+				if(size == arg0.getSize()) {
+					return 0;
+				}
+				else if (size < arg0.getSize()) return 1;
+				return -1;
+			}
+			else if (permanentModifier < arg0.getPermanentModifier()) return 1;
+			return -1;
+		}
 		else if(currentInitiative < arg0.getCurrentInitiative()) return 1;
 		else return -1;
 		
