@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import com.daniel.dnd.vo.CharacterInitiative;
+import com.daniel.dnd.vo.LairInitiative;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
@@ -34,5 +35,17 @@ public class Loader {
 		
 		List<CharacterInitiative> monsters = csvToBean.parse();
 		return monsters;
+	}
+	
+	public List<LairInitiative> loadLair() throws IOException {
+		Reader reader = Files.newBufferedReader(Paths.get("./lair.csv"));
+		
+		CsvToBean<LairInitiative> csvToBean = new CsvToBeanBuilder(reader)
+                  .withType(LairInitiative.class)
+                  .withIgnoreLeadingWhiteSpace(true)
+                  .build();
+		
+		List<LairInitiative> lairs = csvToBean.parse();
+		return lairs;
 	}
 }

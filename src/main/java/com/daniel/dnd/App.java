@@ -12,7 +12,11 @@ public class App
     {
     	InitiativeTracker tracker = new InitiativeTracker();
     	tracker.rollInitiative();
-    	System.out.println("Order");
+    	System.out.println("Order 1");
+    	tracker.printOrder();
+    	
+    	tracker.rollInitiative();
+    	System.out.println("Order 2");
     	tracker.printOrder();
     	
     }

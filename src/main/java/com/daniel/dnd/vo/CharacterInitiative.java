@@ -1,8 +1,9 @@
 package com.daniel.dnd.vo;
 
-public class CharacterInitiative implements Comparable<CharacterInitiative>{
+import java.util.Collections;
 
-	private String name;
+public class CharacterInitiative extends Initiative implements Comparable<Initiative>{
+
 	private int currentInitiative;
 	private int tieBreaker;
 	private int permanentModifier;
@@ -12,12 +13,7 @@ public class CharacterInitiative implements Comparable<CharacterInitiative>{
 	private boolean hasDisadvantage;
 	private int roll;
 	
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+
 	public int getCurrentInitiative() {
 		return currentInitiative;
 	}
@@ -55,8 +51,6 @@ public class CharacterInitiative implements Comparable<CharacterInitiative>{
 		this.hasDisadvantage = hasDisadvantage;
 	}
 	
-	
-
 	public int getRoll() {
 		return roll;
 	}
@@ -65,22 +59,28 @@ public class CharacterInitiative implements Comparable<CharacterInitiative>{
 	}
 	@Override
 	public String toString() {
-		return "CharacterInitiative [name=" + name + ", currentInitiative=" + currentInitiative + ", roll="+roll+", tieBreaker="
+		return "CharacterInitiative [name=" + getName() + ", currentInitiative=" + currentInitiative + ", roll="+roll+", tieBreaker="
 				+ tieBreaker + ", permanentModifier=" + permanentModifier + ", temporaryModifier=" + temporaryModifier
 				+ ", size=" + size + ", hasAdvantage=" + hasAdvantage + ", hasDisadvantage=" + hasDisadvantage + "]";
 	}
-	public int compareTo(CharacterInitiative arg0) {
-		System.out.println("compare "+name+" to "+arg0.getName());
+	public int compareTo(Initiative arg0) {
+		//System.out.println("compare "+name+" to "+arg0.getName());
 		if(currentInitiative == arg0.getCurrentInitiative()) {
-			if(permanentModifier == arg0.getPermanentModifier()) {
-				if(size == arg0.getSize()) {
-					return 0;
+			if(arg0 instanceof CharacterInitiative) {
+				CharacterInitiative carg0 = (CharacterInitiative)arg0;
+			
+				if(permanentModifier == carg0.getPermanentModifier()) {
+					if(size == carg0.getSize()) {
+						return 0;
+					}
+					else if (size < carg0.getSize()) return 1;
+					return -1;
 				}
-				else if (size < arg0.getSize()) return 1;
+				else if (permanentModifier < carg0.getPermanentModifier()) return 1;
+				return -1;
+			} else {
 				return -1;
 			}
-			else if (permanentModifier < arg0.getPermanentModifier()) return 1;
-			return -1;
 		}
 		else if(currentInitiative < arg0.getCurrentInitiative()) return 1;
 		else return -1;
@@ -102,5 +102,30 @@ public class CharacterInitiative implements Comparable<CharacterInitiative>{
 		return currentInitiative;
 	}
 	
+	@Override
+	public void rollInitiative() {
+		roll = rollDice(20);
+		int initiative = roll+getPermanentModifier()+getSize()+getTemporaryModifier();
+		setCurrentInitiative(initiative);
+
+	}
+	
+	private int rollDice(int size) {
+		if(hasAdvantage && !hasDisadvantage) {
+			int d1 = (int)(Math. random()*size+1);
+			int d2 = (int)(Math. random()*size+1);
+			
+			if(d1>d2) return d1;
+			return d2;
+		} else if(!hasAdvantage && hasDisadvantage) {
+			int d1 = (int)(Math. random()*size+1);
+			int d2 = (int)(Math. random()*size+1);
+			
+			if(d1<d2) return d1;
+			return d2;
+		} else {
+			return (int)(Math. random()*size+1);
+		}
+	}
 	
 }

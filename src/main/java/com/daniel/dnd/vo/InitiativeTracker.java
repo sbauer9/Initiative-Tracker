@@ -1,6 +1,7 @@
 package com.daniel.dnd.vo;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -9,15 +10,17 @@ import com.daniel.dnd.load.Loader;
 public class InitiativeTracker {
 
 	
-	private List<CharacterInitiative> orderList;
+	private List<Initiative> orderList;
 	private int currentPosition;
 	private Loader loader;
 	
 	public InitiativeTracker() {
 		try {
 			loader = new Loader();
-			orderList = loader.loadPlayers();
+			orderList = new ArrayList<Initiative>();
+			orderList.addAll(loader.loadPlayers());
 			orderList.addAll(loader.loadMonster());
+			orderList.addAll(loader.loadLair());
 			
 			System.out.println("Loading:");
 			printOrder();
@@ -27,10 +30,10 @@ public class InitiativeTracker {
 		}
 	}
 	
-	public List<CharacterInitiative> getOrderList() {
+	public List<Initiative> getOrderList() {
 		return orderList;
 	}
-	public void setOrderList(List<CharacterInitiative> orderList) {
+	public void setOrderList(List<Initiative> orderList) {
 		this.orderList = orderList;
 	}
 	public int getCurrentPosition() {
@@ -42,36 +45,15 @@ public class InitiativeTracker {
 	
 	public void rollInitiative() {
 		currentPosition = 0;
-		for(CharacterInitiative character : orderList) {
-			int roll = rollDice(20, character.isHasAdvantage(), character.isHasDisadvantage());
-			character.setRoll(roll);
-			int initiative = roll+character.getPermanentModifier()+character.getSize()+
-					character.getTemporaryModifier();
-			character.setCurrentInitiative(initiative);
+		for(Initiative character : orderList) {
+			character.rollInitiative();
 		}
 		
 		Collections.sort(orderList);
 	}
 	
-	private int rollDice(int size, boolean advantage, boolean disadvanatge) {
-		if(advantage && !disadvanatge) {
-			int d1 = (int)(Math. random()*size+1);
-			int d2 = (int)(Math. random()*size+1);
-			
-			if(d1>d2) return d1;
-			return d2;
-		} else if(!advantage && disadvanatge) {
-			int d1 = (int)(Math. random()*size+1);
-			int d2 = (int)(Math. random()*size+1);
-			
-			if(d1<d2) return d1;
-			return d2;
-		} else {
-			return (int)(Math. random()*size+1);
-		}
-	}
 	
-	public CharacterInitiative getNext() {
+	public Initiative getNext() {
 		if(currentPosition < orderList.size()) {
 			return orderList.get(currentPosition++);
 		} else {
@@ -85,7 +67,7 @@ public class InitiativeTracker {
 	 * Returns null when current character is last in the Initiative order
 	 * @return CharacterInitiative that is next
 	 */
-	public CharacterInitiative getOnDeck() {
+	public Initiative getOnDeck() {
 		if(currentPosition < orderList.size()) {
 			return orderList.get(currentPosition);
 		} else {
@@ -94,7 +76,7 @@ public class InitiativeTracker {
 	}
 	
 	public void printOrder() {
-		for(CharacterInitiative character : orderList) {
+		for(Initiative character : orderList) {
 			System.out.println(character);
 		}
 	}
